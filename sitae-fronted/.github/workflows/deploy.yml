@@ -1,0 +1,28 @@
+name: Deploy to Server
+
+on:
+  workflow_run:
+    workflows: ["Build & Push"]
+    types: ["completed"]
+
+env:
+  EC2_HOST: ${{ secrets.EC2_HOST }}
+  EC2_USER: ${{ secrets.EC2_USER }}
+  COMPOSE_FILE: /srv/tutor-ia/docker-compose.prod.yml
+
+jobs:
+  deploy:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Prepare SSH key
+        run: |
+          echo "${{ secrets.EC2_SSH_KEY }}" > key.pem
+          chmod 600 key.pem
+
+      - name: Pull & restart compose
+        run: |
+          ssh -o StrictHostKeyChecking=no -i key.pem ${EC2_USER}@${EC2_HOST} \
+            "docker compose -f ${COMPOSE_FILE} pull && \
+             docker compose -f ${COMPOSE_FILE} up -d && \
+             docker image prune -f"

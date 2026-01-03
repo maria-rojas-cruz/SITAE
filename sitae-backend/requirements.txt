@@ -1,0 +1,37 @@
+fastapi
+uvicorn[standard]
+pydantic>=2
+sqlalchemy>=2.0
+psycopg[binary]
+alembic
+python-dotenv
+pgvector
+#openai
+pydantic>=2.4.0
+pydantic-settings>=2.0.0
+python-dotenv>=1.0.0
+python-jose[cryptography]>=3.3.0
+google-auth>=2.23.0
+google-auth-oauthlib>=1.1.0
+google-auth-httplib2>=0.1.1
+psycopg2-binary>=2.9.7
+httpx>=0.25.0
+python-multipart==0.0.6
+python-jose==3.3.0
+
+# IA y Embeddings
+chromadb==1.1.1
+langchain==0.3.27
+langchain-openai==0.3.35
+openai==2.4.0           
+tiktoken==0.12.0
+
+# Procesamiento de documentos
+pypdf2==3.0.1
+python-docx==1.1.0
+#python-multipart==0.0.9
+
+# Tareas en background
+celery==5.3.6
+redis==5.0.1
+
